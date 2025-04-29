@@ -1,0 +1,28 @@
+// src/theme/RainbowGradients.js
+// Gradientes LGBTIQ+ para ser utilizados en componentes
+export const rainbowGradients = {
+    horizontal: `linear-gradient(to right, 
+      ${colors.red.main}, 
+      ${colors.orange.main}, 
+      ${colors.yellow.main}, 
+      ${colors.green.main}, 
+      ${colors.blue.main}, 
+      ${colors.purple.main})`,
+    vertical: `linear-gradient(to bottom, 
+      ${colors.red.main}, 
+      ${colors.orange.main}, 
+      ${colors.yellow.main}, 
+      ${colors.green.main}, 
+      ${colors.blue.main}, 
+      ${colors.purple.main})`,
+    diagonal: `linear-gradient(135deg, 
+      ${colors.red.main}, 
+      ${colors.orange.main}, 
+      ${colors.yellow.main}, 
+      ${colors.green.main}, 
+      ${colors.blue.main}, 
+      ${colors.purple.main})`,
+    subtle: `linear-gradient(135deg, 
+      ${colors.purple.light} 0%, 
+      ${colors.blue.light} 100%)`,
+  };
