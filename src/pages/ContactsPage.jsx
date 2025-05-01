@@ -13,14 +13,10 @@ import {
   CardContent, 
   Divider,
   Chip,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   useTheme,
   useMediaQuery,
   alpha,
-  Fade,
+  Fade
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
@@ -28,90 +24,61 @@ import WarningIcon from '@mui/icons-material/Warning';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import SendIcon from '@mui/icons-material/Send';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import HomeWorkIcon from '@mui/icons-material/HomeWork';
 import GavelIcon from '@mui/icons-material/Gavel';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import PsychologyIcon from '@mui/icons-material/Psychology';
-import VpnKeyIcon from '@mui/icons-material/VpnKey';
-import LanguageIcon from '@mui/icons-material/Language';
-import { Link as RouterLink } from 'react-router-dom';
 
 import Layout from '../components/layout/Layout';
 import PageHeader from '../components/layout/PageHeader';
-import { ElegantBar, ElegantSection, GradientText } from '../theme/CustomStyles';
+import ContactCard from '../components/common/ContactCard';
 import { useLanguage } from '../context/LanguageContext';
 
-// Categoría chip elegante
+// Categoría chip elegante y minimalista
 const CategoryChip = styled(Chip)(({ theme, isActive, categoryColor }) => ({
-  borderRadius: 16,
-  fontWeight: isActive ? 600 : 500,
+  borderRadius: 0,
+  fontWeight: isActive ? 500 : 400,
   backgroundColor: isActive 
-    ? alpha(categoryColor || theme.palette.primary.main, 0.15) 
-    : alpha(theme.palette.action.hover, 0.5),
+    ? alpha(categoryColor || theme.palette.primary.main, 0.07) 
+    : 'transparent',
   color: isActive 
     ? (categoryColor || theme.palette.primary.main) 
     : theme.palette.text.primary,
   border: isActive 
-    ? `1px solid ${alpha(categoryColor || theme.palette.primary.main, 0.3)}` 
-    : `1px solid transparent`,
+    ? `1px solid ${categoryColor || theme.palette.primary.main}` 
+    : `1px solid ${theme.palette.divider}`,
   transition: 'all 0.2s ease',
   '&:hover': {
     backgroundColor: isActive 
-      ? alpha(categoryColor || theme.palette.primary.main, 0.2) 
-      : alpha(theme.palette.action.hover, 0.8),
+      ? alpha(categoryColor || theme.palette.primary.main, 0.1) 
+      : alpha(theme.palette.action.hover, 0.5),
   },
 }));
 
-// Tarjeta de contacto elegante
-const ContactCard = styled(Card)(({ theme, accentColor, isEmergency }) => ({
-  height: '100%',
-  borderRadius: theme.shape.borderRadius * 2,
-  boxShadow: 'none',
-  border: `1px solid ${theme.palette.divider}`,
-  overflow: 'hidden',
-  transition: 'all 0.3s ease',
-  position: 'relative',
-  ...(isEmergency && {
-    borderLeft: `4px solid ${theme.palette.error.main}`,
-  }),
-  ...(!isEmergency && accentColor && {
-    borderLeft: `4px solid ${accentColor}`,
-  }),
-  '&:hover': {
-    transform: 'translateY(-4px)',
-    boxShadow: theme.shadows[3],
-    borderColor: 'transparent',
-  },
-}));
-
-// Tarjeta de emergencia elegante
+// Tarjeta de emergencia minimalista
 const EmergencyCard = styled(Card)(({ theme }) => ({
   height: '100%',
-  borderRadius: theme.shape.borderRadius * 2,
-  boxShadow: theme.shadows[2],
+  borderRadius: 0,
+  boxShadow: 'none',
   border: 'none',
   overflow: 'hidden',
   transition: 'all 0.3s ease',
   position: 'relative',
-  background: `linear-gradient(145deg, ${alpha(theme.palette.error.main, 0.05)} 0%, ${alpha(theme.palette.error.light, 0.15)} 100%)`,
-  borderLeft: `4px solid ${theme.palette.error.main}`,
+  borderLeft: `2px solid ${theme.palette.error.main}`,
   '&:hover': {
     transform: 'translateY(-4px)',
-    boxShadow: theme.shadows[4],
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
   },
 }));
 
-// Icono de categoría circular elegante
+// Icono de categoría circular minimalista
 const CategoryIcon = styled(Box)(({ theme, color }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  width: 44,
-  height: 44,
-  borderRadius: '50%',
-  backgroundColor: alpha(color || theme.palette.primary.main, 0.1),
+  width: 40,
+  height: 40,
   color: color || theme.palette.primary.main,
   marginRight: theme.spacing(1.5),
   flexShrink: 0,
@@ -286,11 +253,11 @@ const ContactsPage = () => {
 
   return (
     <Layout maxWidth={false} disablePadding>
-      <Box sx={{ bgcolor: alpha(theme.palette.primary.main, 0.02), pt: 6, pb: 10 }}>
+      <Box sx={{ bgcolor: 'background.default', pt: 6, pb: 10 }}>
         <Container maxWidth="lg">
           <PageHeader
-            title={t('contacts.title')}
-            subtitle={t('contacts.subtitle')}
+            title="Contactos y Soporte"
+            subtitle="Directorio de organizaciones, albergues y líneas de ayuda para migrantes LGBTQ+"
             breadcrumbs={[{ label: t('contacts.title'), path: '/contactos' }]}
           />
 
@@ -303,40 +270,42 @@ const ContactsPage = () => {
                 mb: 3
               }}
             >
-              <CategoryIcon color={theme.palette.error.main}>
-                <WarningIcon />
-              </CategoryIcon>
-              <GradientText 
-                variant="h4" 
-                component="h2" 
-                variant="primary"
-                fontWeight={700}
+              <Typography 
+                variant="h6" 
+                component="p"
+                sx={{ 
+                  mb: 1,
+                  color: 'text.secondary',
+                  letterSpacing: '0.05em',
+                  fontWeight: 400
+                }}
               >
-                {t('contacts.emergency.title')}
-              </GradientText>
+                CONTACTOS DE EMERGENCIA
+              </Typography>
             </Box>
+            
+            <Divider sx={{ width: 40, mb: 4 }} />
             
             <Grid container spacing={3}>
               {emergencyContacts.map(contact => (
                 <Grid item xs={12} md={6} key={contact.id}>
                   <EmergencyCard>
                     <CardContent sx={{ p: 3 }}>
-                      <Typography variant="h5" component="h3" gutterBottom fontWeight={700}>
+                      <Typography variant="h5" component="h3" gutterBottom fontWeight={400} letterSpacing="0.02em">
                         {contact.name}
                       </Typography>
                       
-                      <Typography variant="body2" paragraph>
+                      <Typography variant="body2" paragraph color="text.secondary">
                         {contact.description}
                       </Typography>
                       
                       <Box sx={{ 
                         display: 'flex', 
                         alignItems: 'center',
-                        p: 2,
+                        p: 3,
                         mt: 2,
                         bgcolor: 'background.paper',
-                        borderRadius: 2,
-                        boxShadow: 1,
+                        border: `1px solid ${theme.palette.divider}`,
                       }}>
                         <PhoneIcon 
                           fontSize="large" 
@@ -349,14 +318,14 @@ const ContactsPage = () => {
                           <Typography variant="subtitle2" color="text.secondary">
                             Teléfono de emergencia:
                           </Typography>
-                          <Typography variant="h4" component="p" fontWeight={700}>
+                          <Typography variant="h3" component="p" fontWeight={300}>
                             {contact.phone}
                           </Typography>
                         </Box>
                         <Button 
-                          variant="contained" 
+                          variant="outlined" 
                           color="error" 
-                          sx={{ ml: 'auto' }}
+                          sx={{ ml: 'auto', borderRadius: 0 }}
                           href={`tel:${contact.phone.replace(/[^0-9]/g, '')}`}
                         >
                           Llamar
@@ -374,12 +343,13 @@ const ContactsPage = () => {
       <Container maxWidth="lg" sx={{ mt: -6 }}>
         {/* Sección de Filtros */}
         <Paper 
-          elevation={2} 
+          elevation={0} 
           sx={{ 
             p: 3, 
             mb: 6, 
-            borderRadius: 3,
-            backgroundColor: theme.palette.background.paper,
+            borderRadius: 0,
+            border: `1px solid ${theme.palette.divider}`,
+            borderTop: 'none',
           }}
         >
           <Grid container spacing={3} alignItems="center">
@@ -396,13 +366,16 @@ const ContactsPage = () => {
                       <SearchIcon />
                     </InputAdornment>
                   ),
+                  sx: {
+                    borderRadius: 0,
+                  }
                 }}
               />
             </Grid>
             
             <Grid item xs={12} md={6}>
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                <Typography variant="subtitle2" gutterBottom>
+                <Typography variant="subtitle2" gutterBottom fontWeight={400} sx={{ letterSpacing: '0.02em' }}>
                   {t('contacts.filter.title')}
                 </Typography>
                 
@@ -425,174 +398,66 @@ const ContactsPage = () => {
 
         {/* Lista de Contactos */}
         {filteredContacts.length > 0 ? (
-          <Fade in={true} timeout={800}>
-            <Grid container spacing={3} sx={{ mb: 8 }}>
-              {filteredContacts.map(contact => (
-                <Grid item xs={12} md={6} lg={4} key={contact.id}>
-                  <ContactCard 
-                    accentColor={contact.categoryColor} 
-                    isEmergency={contact.isEmergency ? 1 : 0}
-                  >
-                    <CardContent sx={{ p: 3 }}>
-                      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-                        <Typography variant="h6" component="h3" fontWeight={600}>
-                          {contact.name}
-                        </Typography>
-                        
-                        <Chip 
-                          label={contact.category === 'emergency' ? 'Emergencia' : 
-                                contact.category === 'shelter' ? 'Albergue' :
-                                contact.category === 'legal' ? 'Apoyo Legal' :
-                                contact.category === 'health' ? 'Salud' :
-                                contact.category === 'mental' ? 'Apoyo Psicológico' : 
-                                contact.category}
-                          size="small"
-                          sx={{ 
-                            bgcolor: alpha(contact.categoryColor, 0.1),
-                            color: contact.categoryColor,
-                            fontWeight: 500,
-                            borderRadius: '12px',
-                          }}
-                          icon={contact.categoryIcon}
-                        />
-                      </Box>
-                      
-                      <Typography variant="body2" color="text.secondary" paragraph>
-                        {contact.description}
-                      </Typography>
-                      
-                      <Divider sx={{ my: 2 }} />
-                      
-                      <Box sx={{ mt: 2 }}>
-                        {contact.phone && (
-                          <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 1.5 }}>
-                            <PhoneIcon fontSize="small" sx={{ color: 'text.secondary', mr: 1.5, mt: 0.3 }} />
-                            <Box>
-                              <Typography variant="caption" color="text.secondary" display="block">
-                                Teléfono:
-                              </Typography>
-                              <Typography variant="body2" fontWeight={contact.isEmergency ? 600 : 400}>
-                                {contact.phone}
-                              </Typography>
-                            </Box>
-                          </Box>
-                        )}
-                        
-                        {contact.email && (
-                          <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 1.5 }}>
-                            <EmailIcon fontSize="small" sx={{ color: 'text.secondary', mr: 1.5, mt: 0.3 }} />
-                            <Box>
-                              <Typography variant="caption" color="text.secondary" display="block">
-                                Correo:
-                              </Typography>
-                              <Typography variant="body2">
-                                {contact.email}
-                              </Typography>
-                            </Box>
-                          </Box>
-                        )}
-                        
-                        {contact.address && (
-                          <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 1.5 }}>
-                            <LocationOnIcon fontSize="small" sx={{ color: 'text.secondary', mr: 1.5, mt: 0.3 }} />
-                            <Box>
-                              <Typography variant="caption" color="text.secondary" display="block">
-                                Dirección:
-                              </Typography>
-                              <Typography variant="body2">
-                                {contact.address}
-                              </Typography>
-                            </Box>
-                          </Box>
-                        )}
-                        
-                        {contact.website && (
-                          <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 1.5 }}>
-                            <LanguageIcon fontSize="small" sx={{ color: 'text.secondary', mr: 1.5, mt: 0.3 }} />
-                            <Box>
-                              <Typography variant="caption" color="text.secondary" display="block">
-                                Sitio web:
-                              </Typography>
-                              <Typography 
-                                variant="body2" 
-                                component="a"
-                                href={`https://${contact.website}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                sx={{ 
-                                  color: 'primary.main',
-                                  textDecoration: 'none',
-                                  '&:hover': { textDecoration: 'underline' }
-                                }}
-                              >
-                                {contact.website}
-                              </Typography>
-                            </Box>
-                          </Box>
-                        )}
-                      </Box>
-                      
-                      {contact.services && contact.services.length > 0 && (
-                        <Box sx={{ mt: 2 }}>
-                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
-                            Servicios:
-                          </Typography>
-                          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                            {contact.services.map((service, index) => (
-                              <Chip 
-                                key={index} 
-                                label={service} 
-                                size="small"
-                                sx={{ 
-                                  borderRadius: '10px',
-                                  bgcolor: 'background.default',
-                                  border: `1px solid ${theme.palette.divider}`,
-                                  fontSize: '0.75rem',
-                                }}
-                              />
-                            ))}
-                          </Box>
-                        </Box>
-                      )}
-                      
-                      {contact.phone && (
-                        <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
-                          <Button
-                            variant={contact.isEmergency ? 'contained' : 'outlined'}
-                            size="small"
-                            color={contact.isEmergency ? 'error' : 'primary'}
-                            startIcon={<PhoneIcon />}
-                            href={`tel:${contact.phone.replace(/[^0-9]/g, '')}`}
-                            sx={{ 
-                              borderRadius: '20px',
-                              px: 2,
-                              fontWeight: 500,
-                              textTransform: 'none'
-                            }}
-                          >
-                            Llamar
-                          </Button>
-                        </Box>
-                      )}
-                    </CardContent>
-                  </ContactCard>
-                </Grid>
-              ))}
-            </Grid>
-          </Fade>
+          <Box>
+            <Typography 
+              variant="h6" 
+              component="p"
+              sx={{ 
+                mb: 1,
+                color: 'text.secondary',
+                letterSpacing: '0.05em',
+                fontWeight: 400
+              }}
+            >
+              ORGANIZACIONES DE APOYO
+            </Typography>
+            
+            <Divider sx={{ width: 40, mb: 4 }} />
+            
+            <Fade in={true} timeout={800}>
+              <Grid container spacing={3} sx={{ mb: 8 }}>
+                {filteredContacts.map(contact => (
+                  <Grid item xs={12} md={6} lg={4} key={contact.id}>
+                    <ContactCard 
+                      name={contact.name}
+                      description={contact.description}
+                      phone={contact.phone}
+                      email={contact.email}
+                      address={contact.address}
+                      website={contact.website}
+                      category={
+                        contact.category === 'emergency' ? 'Emergencia' : 
+                        contact.category === 'shelter' ? 'Albergue' :
+                        contact.category === 'legal' ? 'Apoyo Legal' :
+                        contact.category === 'health' ? 'Salud' :
+                        contact.category === 'mental' ? 'Apoyo Psicológico' : 
+                        contact.category
+                      }
+                      categoryIcon={contact.categoryIcon}
+                      categoryColor={contact.categoryColor}
+                      services={contact.services}
+                      isEmergency={contact.isEmergency}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            </Fade>
+          </Box>
         ) : (
           <Paper 
             elevation={0} 
             sx={{ 
               p: 6, 
               textAlign: 'center',
-              bgcolor: alpha(theme.palette.background.paper, 0.6),
-              borderRadius: 3,
+              bgcolor: 'background.paper',
+              border: `1px solid ${theme.palette.divider}`,
+              borderRadius: 0,
+              borderTop: 'none',
               mb: 6,
             }}
           >
             <SearchIcon sx={{ fontSize: 60, color: 'text.disabled', mb: 2 }} />
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom fontWeight={400}>
               {t('contacts.noResults')}
             </Typography>
             <Typography variant="body2" color="text.secondary">
@@ -600,7 +465,7 @@ const ContactsPage = () => {
             </Typography>
             <Button 
               variant="outlined" 
-              sx={{ mt: 3 }}
+              sx={{ mt: 3, borderRadius: 0 }}
               onClick={() => {
                 setSearchTerm('');
                 setSelectedCategory('all');
@@ -613,17 +478,31 @@ const ContactsPage = () => {
       </Container>
 
       {/* Formulario de Contacto */}
-      <Box sx={{ bgcolor: alpha(theme.palette.background.paper, 0.6), py: 10 }}>
+      <Box sx={{ py: 10, borderTop: `1px solid ${theme.palette.divider}` }}>
         <Container maxWidth="md">
           <Box sx={{ textAlign: 'center', mb: 6 }}>
-            <GradientText
-              variant="h3"
-              component="h2"
-              fontWeight={700}
-              variant="primary"
+            <Typography 
+              variant="h6" 
+              component="p"
+              sx={{ 
+                mb: 2,
+                color: 'text.secondary',
+                letterSpacing: '0.05em',
+                fontWeight: 400
+              }}
+            >
+              CONTÁCTANOS
+            </Typography>
+            
+            <Divider sx={{ width: 40, mx: 'auto', mb: 4 }} />
+            
+            <Typography 
+              variant="h3" 
+              component="h2" 
+              fontWeight={300}
             >
               {t('contacts.form.title')}
-            </GradientText>
+            </Typography>
             
             <Typography 
               variant="subtitle1" 
@@ -632,15 +511,15 @@ const ContactsPage = () => {
             >
               {t('contacts.form.description')}
             </Typography>
-            
-            <ElegantBar width={60} height={3} sx={{ mx: 'auto', my: 3 }} />
           </Box>
           
           <Paper 
-            elevation={2}
+            elevation={0}
             sx={{ 
               p: { xs: 3, md: 5 }, 
-              borderRadius: 3
+              borderRadius: 0,
+              border: `1px solid ${theme.palette.divider}`,
+              borderTop: 'none',
             }}
           >
             <form>
@@ -651,6 +530,11 @@ const ContactsPage = () => {
                     label={t('contacts.form.name')}
                     variant="outlined"
                     required
+                    InputProps={{
+                      sx: {
+                        borderRadius: 0,
+                      }
+                    }}
                   />
                 </Grid>
                 
@@ -661,6 +545,11 @@ const ContactsPage = () => {
                     variant="outlined"
                     type="email"
                     required
+                    InputProps={{
+                      sx: {
+                        borderRadius: 0,
+                      }
+                    }}
                   />
                 </Grid>
                 
@@ -670,6 +559,11 @@ const ContactsPage = () => {
                     label={t('contacts.form.subject')}
                     variant="outlined"
                     required
+                    InputProps={{
+                      sx: {
+                        borderRadius: 0,
+                      }
+                    }}
                   />
                 </Grid>
                 
@@ -681,6 +575,11 @@ const ContactsPage = () => {
                     multiline
                     rows={6}
                     required
+                    InputProps={{
+                      sx: {
+                        borderRadius: 0,
+                      }
+                    }}
                   />
                 </Grid>
                 
@@ -695,8 +594,8 @@ const ContactsPage = () => {
                       sx={{ 
                         px: 4,
                         py: 1.5,
-                        borderRadius: '28px',
-                        fontWeight: 600
+                        borderRadius: 0,
+                        fontWeight: 400
                       }}
                     >
                       {t('contacts.form.submit')}

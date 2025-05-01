@@ -17,7 +17,6 @@ import {
   Divider, 
   useScrollTrigger, 
   useMediaQuery,
-  Fade,
   ListItemButton
 } from '@mui/material';
 import { styled, useTheme, alpha } from '@mui/material/styles';
@@ -28,8 +27,8 @@ import TranslateIcon from '@mui/icons-material/Translate';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import WarningIcon from '@mui/icons-material/Warning';
 
-// Importación correcta de ElegantBar
-import { ElegantBar } from '../../theme/CustomStyles';
+// Importación del ElegantBar
+import { ElegantBar, GradientText } from '../../theme/CustomStyles';
 import { useLanguage } from '../../context/LanguageContext';
 
 // Navbar con estilo minimalista
@@ -41,10 +40,8 @@ const StyledAppBar = styled(AppBar)(({ theme, trigger }) => ({
   transition: 'all 0.3s ease',
 }));
 
-// Logo de texto elegante
+// Logo de texto elegante y minimalista - Reproduce exactamente la imagen
 const Logo = () => {
-  const theme = useTheme();
-  
   return (
     <Box component={RouterLink} to="/" sx={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
       <Typography 
@@ -58,40 +55,42 @@ const Logo = () => {
           fontSize: { xs: '1.125rem', md: '1.25rem' },
         }}
       >
-        <Box component="span" sx={{ fontWeight: 700, mr: 0.5 }}>Red</Box>
-        <Box 
+        RED <Typography 
           component="span" 
           sx={{ 
-            background: theme.palette.primary.main,
+            fontWeight: 500, 
+            letterSpacing: 1,
+            fontSize: { xs: '1.125rem', md: '1.25rem' },
+            background: 'linear-gradient(90deg, #E91E63, #FF5722, #FFC107, #4CAF50, #2196F3, #9C27B0)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
-            fontWeight: 700,
+            ml: 0.5,
           }}
         >
-          Arcoíris
-        </Box>
+          ARCOÍRIS
+        </Typography>
       </Typography>
     </Box>
   );
 };
 
-// Botón de navegación elegante
+// Botón de navegación minimalista
 const NavButton = styled(Button)(({ theme, active }) => ({
   color: active ? theme.palette.primary.main : theme.palette.text.primary,
   textTransform: 'none',
   letterSpacing: '0.02em',
-  fontWeight: active ? 600 : 500,
+  fontWeight: active ? 500 : 400,
   position: 'relative',
+  padding: '6px 12px',
+  borderRadius: 0,
   '&::after': active ? {
     content: '""',
     position: 'absolute',
     bottom: 0,
-    left: '50%',
-    transform: 'translateX(-50%)',
-    width: '16px',
-    height: '2px',
+    left: 0,
+    width: '100%',
+    height: '1px',
     backgroundColor: theme.palette.primary.main,
-    borderRadius: '1px',
     transition: 'all 0.3s ease',
   } : {},
   '&:hover': {
@@ -100,36 +99,38 @@ const NavButton = styled(Button)(({ theme, active }) => ({
       content: '""',
       position: 'absolute',
       bottom: 0,
-      left: '50%',
-      transform: 'translateX(-50%)',
-      width: '16px',
-      height: '2px',
+      left: 0,
+      width: '100%',
+      height: '1px',
       backgroundColor: alpha(theme.palette.primary.main, 0.6),
-      borderRadius: '1px',
     },
   },
 }));
 
-// Botón de idioma elegante
+// Botón de idioma minimalista
 const LanguageButton = styled(Button)(({ theme }) => ({
   textTransform: 'none',
   color: theme.palette.text.secondary,
-  fontWeight: 500,
+  fontWeight: 400,
   minWidth: 'auto',
   padding: theme.spacing(1),
+  borderRadius: 0,
   '&:hover': {
-    backgroundColor: alpha(theme.palette.primary.main, 0.08),
+    backgroundColor: 'transparent',
+    color: theme.palette.primary.main,
   },
 }));
 
-// Botón de emergencia elegante
+// Botón de emergencia
 const EmergencyButton = styled(Button)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.error.main, 0.9),
+  backgroundColor: theme.palette.error.main,
   color: theme.palette.common.white,
   textTransform: 'none',
-  fontWeight: 600,
+  fontWeight: 400,
+  borderRadius: 0,
+  padding: '6px 16px',
   '&:hover': {
-    backgroundColor: theme.palette.error.main,
+    backgroundColor: theme.palette.error.dark,
   },
 }));
 
@@ -146,14 +147,14 @@ const Header = () => {
     threshold: 100,
   });
 
-  // Links de navegación
+  // Links de navegación - como en la imagen de referencia
   const navigationLinks = [
-    { text: t('nav.home'), path: '/' },
-    { text: t('nav.routes'), path: '/rutas' },
-    { text: t('nav.contacts'), path: '/contactos' },
-    { text: t('nav.resources'), path: '/recursos' },
-    { text: t('nav.rights'), path: '/derechos' },
-    { text: t('nav.help'), path: '/ayuda' },
+    { text: 'Inicio', path: '/' },
+    { text: 'Rutas Seguras', path: '/rutas' },
+    { text: 'Contactos', path: '/contactos' },
+    { text: 'Recursos', path: '/recursos' },
+    { text: 'Derechos', path: '/derechos' },
+    { text: 'Ayuda', path: '/ayuda' },
   ];
 
   // Estado para menú de idiomas
@@ -190,12 +191,6 @@ const Header = () => {
   return (
     <>
       <StyledAppBar position="fixed" color="default" trigger={trigger ? 1 : 0}>
-        <ElegantBar 
-          height={trigger ? 0 : 3} 
-          variant={trigger ? 'rainbow' : 'rainbowSubtle'} 
-          opacity={trigger ? 0 : 1}
-          sx={{ transition: 'all 0.3s ease' }}
-        />
         <Container maxWidth="lg">
           <Toolbar disableGutters sx={{ height: 64 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
@@ -212,27 +207,26 @@ const Header = () => {
                       component={RouterLink}
                       to={link.path}
                       active={isActive(link.path) ? 1 : 0}
-                      sx={{ mx: 0.5 }}
+                      sx={{ mx: 1 }}
                     >
                       {link.text}
                     </NavButton>
                   ))}
                 </Box>
 
-                {/* Language Selector */}
+                {/* Language Selector - Como en la imagen */}
                 <LanguageButton 
                   endIcon={<KeyboardArrowDownIcon />}
                   onClick={handleLanguageMenuOpen}
-                  startIcon={<TranslateIcon />}
+                  sx={{ mx: 1 }}
                 >
-                  {getCurrentLanguageName()}
+                  Español
                 </LanguageButton>
                 <Menu
                   anchorEl={languageMenuAnchor}
                   open={Boolean(languageMenuAnchor)}
                   onClose={handleLanguageMenuClose}
-                  TransitionComponent={Fade}
-                  elevation={2}
+                  elevation={0}
                   anchorOrigin={{
                     vertical: 'bottom',
                     horizontal: 'right',
@@ -240,6 +234,13 @@ const Header = () => {
                   transformOrigin={{
                     vertical: 'top',
                     horizontal: 'right',
+                  }}
+                  sx={{
+                    '& .MuiPaper-root': {
+                      borderRadius: 0,
+                      boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.08)',
+                      border: `1px solid ${theme.palette.divider}`,
+                    }
                   }}
                 >
                   {availableLanguages?.map((option) => (
@@ -267,7 +268,7 @@ const Header = () => {
                   size="small"
                   sx={{ ml: 2 }}
                 >
-                  {t('nav.emergency')}
+                  Emergencia
                 </EmergencyButton>
               </Box>
             )}
@@ -327,14 +328,14 @@ const Header = () => {
                 selected={isActive(link.path)}
                 sx={{
                   py: 1.5,
-                  borderLeft: isActive(link.path) ? `3px solid ${theme.palette.primary.main}` : '3px solid transparent',
-                  backgroundColor: isActive(link.path) ? alpha(theme.palette.primary.main, 0.08) : 'transparent',
+                  borderLeft: isActive(link.path) ? `1px solid ${theme.palette.primary.main}` : '1px solid transparent',
+                  backgroundColor: isActive(link.path) ? alpha(theme.palette.primary.main, 0.04) : 'transparent',
                 }}
               >
                 <ListItemText 
                   primary={link.text} 
                   primaryTypographyProps={{
-                    fontWeight: isActive(link.path) ? 600 : 500,
+                    fontWeight: isActive(link.path) ? 500 : 400,
                     color: isActive(link.path) ? 'primary.main' : 'text.primary',
                   }}
                 />
@@ -347,7 +348,7 @@ const Header = () => {
           {/* Language Selection */}
           <Box sx={{ mb: 1 }}>
             <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
-              {t('common.selectLanguage')}
+              Selecciona un idioma
             </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
               {availableLanguages?.map((lang) => (
@@ -363,6 +364,7 @@ const Header = () => {
                     py: 0.5,
                     fontSize: '0.75rem',
                     textTransform: 'none',
+                    borderRadius: 0,
                   }}
                 >
                   {lang.name}
@@ -381,7 +383,7 @@ const Header = () => {
             to="/emergencia"
             onClick={toggleDrawer}
           >
-            {t('nav.emergency')}
+            Emergencia
           </EmergencyButton>
         </Box>
       </Drawer>

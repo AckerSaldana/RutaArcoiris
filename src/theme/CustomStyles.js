@@ -30,12 +30,12 @@ const elegantGradients = {
     #CE93D8 0%, 
     #90CAF9 100%)`,
   rainbow: `linear-gradient(90deg, 
-    #E91E6340 0%, 
-    #FF572240 20%, 
-    #FFC10740 40%, 
-    #4CAF5040 60%, 
-    #2196F340 80%, 
-    #9C27B040 100%)`,
+    #E91E63 0%, 
+    #FF5722 20%, 
+    #FFC107 40%, 
+    #4CAF50 60%, 
+    #2196F3 80%, 
+    #9C27B0 100%)`,
   rainbowSubtle: `linear-gradient(90deg, 
     #E91E6320 0%, 
     #FF572220 20%, 
@@ -45,8 +45,8 @@ const elegantGradients = {
     #9C27B020 100%)`,
 };
 
-// Barra arcoíris decorativa
-export const RainbowBar = styled(Box)(({ theme, height = 4, opacity = 1, variant = 'rainbow' }) => {
+// Barra arcoíris decorativa - versión minimalista
+export const RainbowBar = styled(Box)(({ theme, height = 2, opacity = 1, variant = 'rainbow' }) => {
   // Determinar el gradiente basado en la variante
   const getGradient = () => {
     switch (variant) {
@@ -98,11 +98,11 @@ export const GradientText = styled(Typography)(({
   };
 });
 
-// Contenedor para secciones con fondo sutil
+// Contenedor para secciones con fondo sutil - versión minimalista
 export const ElegantSection = styled(Box)(({ 
   theme, 
   variant = 'default',
-  borderRadius = true
+  borderRadius = false
 }) => {
   // Determinar el fondo basado en la variante
   const getBackground = () => {
@@ -118,14 +118,15 @@ export const ElegantSection = styled(Box)(({
   return {
     padding: theme.spacing(4),
     background: getBackground(),
-    ...(borderRadius && { borderRadius: theme.shape.borderRadius * 2 }),
+    ...(borderRadius && { borderRadius: borderRadius ? theme.shape.borderRadius : 0 }),
+    border: `1px solid ${theme.palette.divider}`,
   };
 });
 
-// Barra elegante
+// Barra elegante - versión minimalista
 export const ElegantBar = styled(Box)(({ 
   theme, 
-  height = 2, 
+  height = 1, 
   width = '100%',
   variant = 'rainbow', 
   opacity = 1,
@@ -153,6 +154,40 @@ export const ElegantBar = styled(Box)(({
   };
 });
 
+// Contenedor de tarjeta elegante - versión minimalista
+export const ElegantCard = styled(Box)(({ 
+  theme, 
+  variant = 'default',
+  hover = true
+}) => {
+  // Determinar borde basado en la variante
+  const getBorder = () => {
+    switch (variant) {
+      case 'primary': return `1px solid ${theme.palette.primary.main}`;
+      case 'secondary': return `1px solid ${theme.palette.secondary.main}`;
+      case 'rainbow': return `1px solid ${theme.palette.divider}`;
+      default: return `1px solid ${theme.palette.divider}`;
+    }
+  };
+
+  return {
+    padding: theme.spacing(3),
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: 0,
+    border: getBorder(),
+    transition: 'all 0.3s ease',
+    ...(hover && {
+      '&:hover': {
+        transform: 'translateY(-4px)',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+        borderColor: variant === 'rainbow' 
+          ? theme.palette.primary.main 
+          : theme.palette.text.primary,
+      },
+    }),
+  };
+});
+
 // Exportaciones principales
 export { elegantGradients };
 
@@ -162,5 +197,6 @@ export default {
   GradientText,
   ElegantBar,
   ElegantSection,
+  ElegantCard,
   elegantGradients
 };

@@ -34,7 +34,7 @@ const StyledFooter = styled(Box)(({ theme }) => ({
   paddingBottom: theme.spacing(4),
 }));
 
-// Enlace elegante
+// Enlace minimalista
 const FooterLink = styled(Link)(({ theme }) => ({
   color: theme.palette.text.secondary,
   textDecoration: 'none',
@@ -47,23 +47,23 @@ const FooterLink = styled(Link)(({ theme }) => ({
   },
 }));
 
-// Icono social elegante
+// Icono social minimalista
 const SocialIconButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.text.secondary,
   transition: 'all 0.2s ease',
   padding: theme.spacing(1),
-  backgroundColor: alpha(theme.palette.divider, 0.5),
+  backgroundColor: 'transparent',
+  borderRadius: 0,
   '&:hover': {
-    backgroundColor: alpha(theme.palette.primary.main, 0.08),
+    backgroundColor: 'transparent',
     color: theme.palette.primary.main,
-    transform: 'translateY(-2px)',
   },
 }));
 
-// Campo de texto elegante para el boletín
+// Campo de texto minimalista para el boletín
 const NewsletterTextField = styled(TextField)(({ theme }) => ({
   '& .MuiOutlinedInput-root': {
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: 0,
     backgroundColor: alpha(theme.palette.background.default, 0.8),
     transition: 'all 0.2s ease',
     '&:hover': {
@@ -71,7 +71,11 @@ const NewsletterTextField = styled(TextField)(({ theme }) => ({
     },
     '&.Mui-focused': {
       backgroundColor: theme.palette.background.default,
-      boxShadow: `0 0 0 2px ${alpha(theme.palette.primary.main, 0.25)}`,
+      boxShadow: 'none',
+      '& fieldset': {
+        borderColor: theme.palette.primary.main,
+        borderWidth: '1px',
+      },
     },
   },
 }));
@@ -91,16 +95,16 @@ const Footer = () => {
               <Typography 
                 variant="h6" 
                 sx={{ 
-                  fontWeight: 700, 
+                  fontWeight: 400, 
                   letterSpacing: 1,
                   display: 'flex',
                   alignItems: 'center',
                   mb: 0.5,
                 }}
               >
-                Red<GradientText variant="primary">Arcoíris</GradientText>
+                RED<GradientText variant="rainbow" sx={{ ml: 0.5 }}>ARCOÍRIS</GradientText>
               </Typography>
-              <ElegantBar width={60} height={3} sx={{ mb: 2 }} />
+              <Divider sx={{ width: 40, mt: 1, mb: 2 }} />
             </Box>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 2, maxWidth: 300 }}>
               {t('footer.about')}
@@ -120,7 +124,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <Grid item xs={12} sm={6} md={2}>
-            <Typography variant="subtitle1" fontWeight={600} gutterBottom color="text.primary">
+            <Typography variant="subtitle1" fontWeight={400} gutterBottom color="text.primary" sx={{ letterSpacing: '0.05em' }}>
               {t('footer.quickLinks')}
             </Typography>
             <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0 }}>
@@ -154,7 +158,7 @@ const Footer = () => {
 
           {/* Contact */}
           <Grid item xs={12} sm={6} md={2}>
-            <Typography variant="subtitle1" fontWeight={600} gutterBottom color="text.primary">
+            <Typography variant="subtitle1" fontWeight={400} gutterBottom color="text.primary" sx={{ letterSpacing: '0.05em' }}>
               {t('footer.contact')}
             </Typography>
             <Box sx={{ mb: 1.5, display: 'flex', alignItems: 'center' }}>
@@ -173,7 +177,7 @@ const Footer = () => {
 
           {/* Newsletter */}
           <Grid item xs={12} md={4}>
-            <Typography variant="subtitle1" fontWeight={600} gutterBottom color="text.primary">
+            <Typography variant="subtitle1" fontWeight={400} gutterBottom color="text.primary" sx={{ letterSpacing: '0.05em' }}>
               {t('footer.newsletter')}
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
@@ -194,8 +198,8 @@ const Footer = () => {
                       sx={{ 
                         minWidth: 'unset', 
                         p: '6px',
-                        borderRadius: '0 4px 4px 0',
-                        mr: '-13px',
+                        borderRadius: 0,
+                        mr: '-2px',
                       }}
                     >
                       <SendIcon fontSize="small" />
@@ -235,8 +239,6 @@ const Footer = () => {
           </Box>
         </Box>
       </Container>
-      
-      <ElegantBar sx={{ mt: 4 }} />
     </StyledFooter>
   );
 };

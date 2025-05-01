@@ -7,24 +7,12 @@ import {
   Typography, 
   Button, 
   Box, 
-  useTheme, 
-  styled 
+  useTheme
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-// Styled card with hover effect
-const StyledCard = styled(Card)(({ theme }) => ({
-  height: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-  '&:hover': {
-    transform: 'translateY(-8px)',
-    boxShadow: theme.shadows[8],
-  },
-}));
-
+// Styled card minimalista
 const InfoCard = ({
   title,
   description,
@@ -35,7 +23,7 @@ const InfoCard = ({
   linkText,
   linkTo,
   color = 'primary',
-  elevation = 1,
+  elevation = 0,
   accentColor,
   onClick,
   sx = {},
@@ -54,13 +42,32 @@ const InfoCard = ({
   );
 
   return (
-    <StyledCard elevation={elevation} sx={{ ...sx }}>
+    <Card 
+      elevation={elevation} 
+      sx={{ 
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        borderRadius: 0,
+        borderLeft: `2px solid ${cardAccentColor}`,
+        borderTop: 'none',
+        borderRight: `1px solid ${theme.palette.divider}`,
+        borderBottom: `1px solid ${theme.palette.divider}`,
+        transition: 'all 0.3s ease',
+        '&:hover': {
+          transform: 'translateY(-4px)',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+        },
+        ...sx 
+      }}
+    >
       {image && (
         <CardMedia
           component="img"
           height={imageHeight}
           image={image}
           alt={imageAlt || title}
+          sx={{ borderRadius: 0 }}
         />
       )}
       <CardContent sx={{ 
@@ -68,7 +75,6 @@ const InfoCard = ({
         display: 'flex', 
         flexDirection: 'column', 
         p: 3,
-        borderLeft: `4px solid ${cardAccentColor}`,
         height: '100%',
       }}>
         <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 2 }}>
@@ -83,7 +89,7 @@ const InfoCard = ({
               {icon}
             </Box>
           )}
-          <Typography variant="h6" component="h3" gutterBottom>
+          <Typography variant="h6" component="h3" gutterBottom sx={{ fontWeight: 400, letterSpacing: '0.02em' }}>
             {title}
           </Typography>
         </Box>
@@ -102,7 +108,9 @@ const InfoCard = ({
             sx={{ 
               mt: 2, 
               alignSelf: 'flex-start',
-              fontWeight: 500,
+              fontWeight: 400,
+              textTransform: 'none',
+              p: 0,
               '&:hover': {
                 backgroundColor: 'transparent',
                 color: cardAccentColor,
@@ -113,7 +121,7 @@ const InfoCard = ({
           </Button>
         )}
       </CardContent>
-    </StyledCard>
+    </Card>
   );
 };
 

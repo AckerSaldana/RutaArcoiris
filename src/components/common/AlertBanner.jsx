@@ -29,26 +29,26 @@ const AlertBanner = ({
   // Define styles based on alert type
   const alertStyles = {
     info: {
-      bg: theme.palette.info.light,
-      color: theme.palette.info.dark,
+      bg: 'transparent',
+      color: theme.palette.info.main,
       borderColor: theme.palette.info.main,
       icon: icon || <InfoIcon />,
     },
     success: {
-      bg: theme.palette.success.light,
-      color: theme.palette.success.dark,
+      bg: 'transparent',
+      color: theme.palette.success.main,
       borderColor: theme.palette.success.main,
       icon: icon || <CheckCircleIcon />,
     },
     warning: {
-      bg: theme.palette.warning.light,
-      color: theme.palette.warning.dark,
+      bg: 'transparent',
+      color: theme.palette.warning.main,
       borderColor: theme.palette.warning.main,
       icon: icon || <WarningIcon />,
     },
     error: {
-      bg: theme.palette.error.light,
-      color: theme.palette.error.dark,
+      bg: 'transparent',
+      color: theme.palette.error.main,
       borderColor: theme.palette.error.main,
       icon: icon || <ErrorIcon />,
     },
@@ -62,23 +62,23 @@ const AlertBanner = ({
       sx={{
         p: 3,
         backgroundColor: style.bg,
-        color: style.color,
-        borderRadius: 2,
-        borderLeft: `4px solid ${style.borderColor}`,
+        color: 'text.primary',
+        borderRadius: 0,
+        borderLeft: `2px solid ${style.borderColor}`,
         display: 'flex',
         ...sx
       }}
     >
-      <Box sx={{ mr: 2, display: 'flex', alignItems: 'flex-start' }}>
+      <Box sx={{ mr: 2, display: 'flex', alignItems: 'flex-start', color: style.color }}>
         {style.icon}
       </Box>
       <Box sx={{ flexGrow: 1 }}>
         {title && (
-          <Typography variant="subtitle1" component="div" fontWeight={600} gutterBottom>
+          <Typography variant="subtitle1" component="div" fontWeight={400} gutterBottom letterSpacing="0.02em">
             {title}
           </Typography>
         )}
-        <Typography variant="body2" component="div">
+        <Typography variant="body2" component="div" color="text.secondary">
           {message}
         </Typography>
         
@@ -91,7 +91,14 @@ const AlertBanner = ({
                 href={actionLink}
                 color={type}
                 underline="none"
-                sx={{ fontWeight: 500 }}
+                sx={{ 
+                  fontWeight: 400,
+                  textTransform: 'none',
+                  p: 0,
+                  '&:hover': {
+                    backgroundColor: 'transparent',
+                  }
+                }}
               >
                 {actionText}
               </Link>
@@ -100,7 +107,14 @@ const AlertBanner = ({
                 variant="text" 
                 color={type} 
                 onClick={onActionClick}
-                sx={{ fontWeight: 500 }}
+                sx={{ 
+                  fontWeight: 400,
+                  textTransform: 'none',
+                  p: 0,
+                  '&:hover': {
+                    backgroundColor: 'transparent',
+                  }
+                }}
               >
                 {actionText}
               </Button>

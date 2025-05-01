@@ -20,7 +20,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import DirectionsIcon from '@mui/icons-material/Directions';
 
-// Styled warning item
+// Styled warning item - minimalista
 const WarningItem = styled(ListItem)(({ theme }) => ({
   padding: theme.spacing(0.5, 1),
   '& .MuiListItemIcon-root': {
@@ -29,7 +29,7 @@ const WarningItem = styled(ListItem)(({ theme }) => ({
   },
 }));
 
-// Styled tip item
+// Styled tip item - minimalista
 const TipItem = styled(ListItem)(({ theme }) => ({
   padding: theme.spacing(0.5, 1),
   '& .MuiListItemIcon-root': {
@@ -52,17 +52,24 @@ const RouteSafetyCard = ({
 }) => {
   return (
     <Card 
-      elevation={active ? 3 : 1} 
+      elevation={0} 
       sx={{
         position: 'relative',
         overflow: 'visible',
         height: '100%',
         cursor: onClick ? 'pointer' : 'default',
-        borderLeft: active ? '4px solid' : 'none',
-        borderColor: 'primary.main',
+        borderLeft: active ? '2px solid' : '1px solid',
+        borderLeftColor: active ? 'primary.main' : 'divider',
+        borderTop: 'none',
+        borderRight: '1px solid',
+        borderRightColor: 'divider',
+        borderBottom: '1px solid',
+        borderBottomColor: 'divider',
+        borderRadius: 0,
         transition: 'all 0.3s ease',
         '&:hover': {
-          boxShadow: 4,
+          transform: 'translateY(-4px)',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
         },
         ...sx
       }}
@@ -74,11 +81,12 @@ const RouteSafetyCard = ({
           height={200}
           image={image}
           alt={imageAlt || title}
+          sx={{ borderRadius: 0 }}
         />
       )}
       
       <CardContent sx={{ p: 3 }}>
-        <Typography variant="h5" component="h2" gutterBottom>
+        <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 400, letterSpacing: '0.02em' }}>
           {title}
         </Typography>
         
@@ -88,7 +96,7 @@ const RouteSafetyCard = ({
         
         {safePoints.length > 0 && (
           <Box sx={{ mb: 3 }}>
-            <Typography variant="subtitle1" gutterBottom fontWeight={500} sx={{ display: 'flex', alignItems: 'center' }}>
+            <Typography variant="subtitle1" gutterBottom fontWeight={400} sx={{ display: 'flex', alignItems: 'center', letterSpacing: '0.02em' }}>
               <PlaceIcon sx={{ mr: 1, color: 'success.main' }} />
               Puntos Seguros
             </Typography>
@@ -101,6 +109,7 @@ const RouteSafetyCard = ({
                   variant="outlined"
                   size="small"
                   icon={<PlaceIcon />}
+                  sx={{ borderRadius: 0 }}
                 />
               ))}
             </Box>
@@ -109,7 +118,7 @@ const RouteSafetyCard = ({
         
         {dangerPoints.length > 0 && (
           <Box sx={{ mb: 3 }}>
-            <Typography variant="subtitle1" gutterBottom fontWeight={500} sx={{ display: 'flex', alignItems: 'center' }}>
+            <Typography variant="subtitle1" gutterBottom fontWeight={400} sx={{ display: 'flex', alignItems: 'center', letterSpacing: '0.02em' }}>
               <WarningAmberIcon sx={{ mr: 1, color: 'warning.main' }} />
               Puntos de Precaución
             </Typography>
@@ -131,7 +140,7 @@ const RouteSafetyCard = ({
         
         {tips.length > 0 && (
           <Box>
-            <Typography variant="subtitle1" gutterBottom fontWeight={500} sx={{ display: 'flex', alignItems: 'center' }}>
+            <Typography variant="subtitle1" gutterBottom fontWeight={400} sx={{ display: 'flex', alignItems: 'center', letterSpacing: '0.02em' }}>
               <CheckIcon sx={{ mr: 1, color: 'success.main' }} />
               Consejos de Seguridad
             </Typography>
@@ -157,6 +166,11 @@ const RouteSafetyCard = ({
               variant="contained" 
               color="primary" 
               endIcon={<DirectionsIcon />}
+              sx={{ 
+                borderRadius: 0, 
+                fontWeight: 400,
+                textTransform: 'none'
+              }}
             >
               Ver Detalles
             </Button>

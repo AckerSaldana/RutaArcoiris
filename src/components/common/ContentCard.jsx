@@ -11,25 +11,48 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-// Styled card with optional accent border
+// Styled card con estilo minimalista
 const StyledContentCard = styled(Card, {
   shouldForwardProp: (prop) => prop !== 'accentPosition' && prop !== 'accentColor'
 })(({ theme, accentPosition, accentColor }) => ({
   height: '100%',
   display: 'flex',
   flexDirection: 'column',
+  borderRadius: 0,
+  boxShadow: 'none',
   ...(accentPosition === 'left' && {
-    borderLeft: `4px solid ${accentColor || theme.palette.primary.main}`,
+    borderLeft: `2px solid ${accentColor || theme.palette.primary.main}`,
+    borderTop: 'none',
+    borderRight: `1px solid ${theme.palette.divider}`,
+    borderBottom: `1px solid ${theme.palette.divider}`,
   }),
   ...(accentPosition === 'top' && {
-    borderTop: `4px solid ${accentColor || theme.palette.primary.main}`,
+    borderTop: `2px solid ${accentColor || theme.palette.primary.main}`,
+    borderLeft: `1px solid ${theme.palette.divider}`,
+    borderRight: `1px solid ${theme.palette.divider}`,
+    borderBottom: `1px solid ${theme.palette.divider}`,
   }),
   ...(accentPosition === 'right' && {
-    borderRight: `4px solid ${accentColor || theme.palette.primary.main}`,
+    borderRight: `2px solid ${accentColor || theme.palette.primary.main}`,
+    borderTop: 'none',
+    borderLeft: `1px solid ${theme.palette.divider}`,
+    borderBottom: `1px solid ${theme.palette.divider}`,
   }),
   ...(accentPosition === 'bottom' && {
-    borderBottom: `4px solid ${accentColor || theme.palette.primary.main}`,
+    borderBottom: `2px solid ${accentColor || theme.palette.primary.main}`,
+    borderTop: 'none',
+    borderLeft: `1px solid ${theme.palette.divider}`,
+    borderRight: `1px solid ${theme.palette.divider}`,
   }),
+  ...(!accentPosition && {
+    border: `1px solid ${theme.palette.divider}`,
+    borderTop: 'none',
+  }),
+  transition: 'all 0.3s ease',
+  '&:hover': {
+    transform: 'translateY(-4px)',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+  },
 }));
 
 const ContentCard = ({
@@ -38,7 +61,7 @@ const ContentCard = ({
   subheader,
   children,
   actions,
-  elevation = 1,
+  elevation = 0,
   accentPosition,
   accentColor,
   headerProps = {},
@@ -65,6 +88,12 @@ const ContentCard = ({
               </Box>
             }
             subheader={subheader}
+            sx={{ 
+              '& .MuiCardHeader-title': { 
+                fontWeight: 400,
+                letterSpacing: '0.02em',
+              }
+            }}
             {...headerProps}
           />
           {divider && <Divider />}

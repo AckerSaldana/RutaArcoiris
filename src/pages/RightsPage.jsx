@@ -35,34 +35,45 @@ import FamilyRestroomIcon from '@mui/icons-material/FamilyRestroom';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import DownloadIcon from '@mui/icons-material/Download';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import InfoIcon from '@mui/icons-material/Info';
-import WarningIcon from '@mui/icons-material/Warning';
 
 import Layout from '../components/layout/Layout';
 import PageHeader from '../components/layout/PageHeader';
 import ContentCard from '../components/common/ContentCard';
 import AlertBanner from '../components/common/AlertBanner';
-import { RainbowBar } from '../theme/CustomStyles';
 import { useLanguage } from '../context/LanguageContext';
 
-// Estilos para las pestañas
+// Estilos para las pestañas minimalistas
 const StyledTabs = styled(Tabs)(({ theme }) => ({
   marginBottom: theme.spacing(3),
   '& .MuiTabs-indicator': {
     backgroundColor: theme.palette.primary.main,
-    height: 3,
+    height: 1,
   },
 }));
 
 const StyledTab = styled(Tab)(({ theme }) => ({
   textTransform: 'none',
-  fontWeight: 500,
+  fontWeight: 400,
   fontSize: '0.875rem',
   minHeight: 48,
   minWidth: 120,
   '&.Mui-selected': {
     color: theme.palette.primary.main,
-    fontWeight: 600,
+    fontWeight: 500,
+  },
+}));
+
+// Accordion minimalista
+const StyledAccordion = styled(Accordion)(({ theme }) => ({
+  borderRadius: 0,
+  boxShadow: 'none',
+  border: `1px solid ${theme.palette.divider}`,
+  marginBottom: theme.spacing(2),
+  '&::before': {
+    display: 'none',
+  },
+  '&.Mui-expanded': {
+    margin: '0 0 16px 0',
   },
 }));
 
@@ -197,7 +208,6 @@ const RightsPage = () => {
   const theme = useTheme();
   const { t } = useLanguage();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
   
   // Estado para las pestañas de categorías
   const [selectedCategory, setSelectedCategory] = useState('basic');
@@ -210,37 +220,51 @@ const RightsPage = () => {
   return (
     <Layout>
       <PageHeader
-        title={t('rights.title')}
-        subtitle={t('rights.subtitle')}
-        breadcrumbs={[{ label: t('rights.title'), path: '/derechos' }]}
+        title="Conoce tus Derechos"
+        subtitle="Información sobre los derechos de los migrantes LGBTQ+ en México y cómo protegerte durante tu trayecto"
+        breadcrumbs={[{ label: 'Derechos', path: '/derechos' }]}
       />
 
       {/* Introducción */}
       <Box sx={{ mb: 6 }}>
-        <ContentCard>
+        <ContentCard elevation={0}>
           <Grid container spacing={4}>
             <Grid item xs={12} md={7}>
-              <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 600 }}>
-                {t('rights.intro.title')}
+              <Typography 
+                variant="h6" 
+                component="p"
+                sx={{ 
+                  mb: 2,
+                  color: 'text.secondary',
+                  letterSpacing: '0.05em',
+                  fontWeight: 400
+                }}
+              >
+                INFORMACIÓN LEGAL
+              </Typography>
+              
+              <Divider sx={{ width: 40, mb: 4 }} />
+              
+              <Typography variant="h4" component="h2" gutterBottom fontWeight={300}>
+                Conoce tus derechos como migrante LGBTQ+
               </Typography>
               
               <Typography variant="body1" paragraph>
-                {t('rights.intro.description')}
+                En México, todas las personas migrantes, independientemente de su orientación sexual o identidad de género, tienen derechos fundamentales que deben ser respetados.
               </Typography>
               
               <Typography variant="body1" paragraph>
                 En esta sección encontrarás información sobre los derechos fundamentales que tienes como migrante LGBTQ+ en México, cómo acceder a servicios básicos y qué hacer en caso de que tus derechos sean vulnerados.
               </Typography>
               
-              <Box sx={{ display: 'flex', mt: 2 }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  endIcon={<DownloadIcon />}
-                >
-                  Descargar guía completa de derechos
-                </Button>
-              </Box>
+              <Button
+                variant="outlined"
+                color="primary"
+                endIcon={<DownloadIcon />}
+                sx={{ mt: 2, borderRadius: 0 }}
+              >
+                Descargar guía completa de derechos
+              </Button>
             </Grid>
             
             <Grid item xs={12} md={5}>
@@ -248,49 +272,65 @@ const RightsPage = () => {
                 type="info"
                 title="Información importante"
                 message="Los derechos descritos en esta página son aplicables para todas las personas migrantes en México, independientemente de su situación migratoria. Sin embargo, algunos servicios específicos pueden requerir documentación adicional."
-                icon={<InfoIcon />}
               />
               
-              <AlertBanner
-                type="warning"
-                title="Recuerda"
-                message="Si tus derechos han sido vulnerados, puedes presentar una queja ante la Comisión Nacional de Derechos Humanos (CNDH) o buscar asesoría legal en las organizaciones listadas en la sección de contactos."
-                sx={{ mt: 2 }}
-                icon={<WarningIcon />}
-              />
+              <Box sx={{ mt: 2 }}>
+                <AlertBanner
+                  type="warning"
+                  title="Recuerda"
+                  message="Si tus derechos han sido vulnerados, puedes presentar una queja ante la Comisión Nacional de Derechos Humanos (CNDH) o buscar asesoría legal en las organizaciones listadas en la sección de contactos."
+                />
+              </Box>
             </Grid>
           </Grid>
         </ContentCard>
       </Box>
 
       {/* Pestañas de Categorías */}
-      <StyledTabs
-        value={selectedCategory}
-        onChange={handleCategoryChange}
-        variant="scrollable"
-        scrollButtons="auto"
-        aria-label="rights categories"
-      >
-        {rightCategories.map(category => (
-          <StyledTab 
-            key={category.id} 
-            value={category.id} 
-            label={
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Box sx={{ mr: 1, display: 'flex' }}>
-                  {category.icon}
+      <Box>
+        <Typography 
+          variant="h6" 
+          component="p"
+          sx={{ 
+            mb: 2,
+            color: 'text.secondary',
+            letterSpacing: '0.05em',
+            fontWeight: 400
+          }}
+        >
+          CATEGORÍAS DE DERECHOS
+        </Typography>
+        
+        <Divider sx={{ width: 40, mb: 4 }} />
+      
+        <StyledTabs
+          value={selectedCategory}
+          onChange={handleCategoryChange}
+          variant="scrollable"
+          scrollButtons="auto"
+          aria-label="rights categories"
+        >
+          {rightCategories.map(category => (
+            <StyledTab 
+              key={category.id} 
+              value={category.id} 
+              label={
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Box sx={{ mr: 1, display: 'flex' }}>
+                    {category.icon}
+                  </Box>
+                  {category.label}
                 </Box>
-                {category.label}
-              </Box>
-            } 
-          />
-        ))}
-      </StyledTabs>
+              } 
+            />
+          ))}
+        </StyledTabs>
+      </Box>
 
       {/* Lista de Derechos */}
       <Box sx={{ mb: 6 }}>
         {rightsData[selectedCategory] && rightsData[selectedCategory].map((right, index) => (
-          <Accordion key={right.id} elevation={1} sx={{ mb: 2 }}>
+          <StyledAccordion key={right.id}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls={`panel-${right.id}-content`}
@@ -300,7 +340,7 @@ const RightsPage = () => {
                 <Box sx={{ mr: 2, display: 'flex' }}>
                   {right.icon}
                 </Box>
-                <Typography variant="h6" component="h3">
+                <Typography variant="h6" component="h3" fontWeight={400}>
                   {right.title}
                 </Typography>
               </Box>
@@ -315,7 +355,7 @@ const RightsPage = () => {
                 </Typography>
               </Box>
             </AccordionDetails>
-          </Accordion>
+          </StyledAccordion>
         ))}
       </Box>
 
@@ -323,22 +363,37 @@ const RightsPage = () => {
 
       {/* Sección de Recursos Legales */}
       <Box sx={{ mb: 6 }}>
-        <Typography variant="h4" component="h2" gutterBottom sx={{ fontWeight: 600 }}>
-          Recursos Legales
+        <Typography 
+          variant="h6" 
+          component="p"
+          sx={{ 
+            mb: 2,
+            color: 'text.secondary',
+            letterSpacing: '0.05em',
+            fontWeight: 400
+          }}
+        >
+          RECURSOS LEGALES
         </Typography>
         
-        <Typography variant="body1" paragraph>
+        <Divider sx={{ width: 40, mb: 4 }} />
+        
+        <Typography variant="h4" component="h2" gutterBottom fontWeight={300}>
+          Documentos y recursos útiles
+        </Typography>
+        
+        <Typography variant="body1" paragraph sx={{ mb: 4 }}>
           Aquí encontrarás documentos e información que pueden ayudarte a ejercer tus derechos como migrante LGBTQ+ en México.
         </Typography>
         
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
-            <Card sx={{ height: '100%' }}>
+            <Card sx={{ height: '100%', borderRadius: 0, border: `1px solid ${theme.palette.divider}`, boxShadow: 'none' }}>
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 2 }}>
                   <LibraryBooksIcon color="primary" sx={{ mr: 2, fontSize: 40 }} />
                   <Box>
-                    <Typography variant="h6" component="h3" gutterBottom>
+                    <Typography variant="h6" component="h3" gutterBottom fontWeight={400}>
                       Guía para Solicitantes de Asilo LGBTQ+
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -350,7 +405,7 @@ const RightsPage = () => {
                   variant="outlined"
                   color="primary"
                   endIcon={<DownloadIcon />}
-                  sx={{ mt: 2 }}
+                  sx={{ mt: 2, borderRadius: 0 }}
                 >
                   Descargar PDF
                 </Button>
@@ -359,12 +414,12 @@ const RightsPage = () => {
           </Grid>
           
           <Grid item xs={12} md={4}>
-            <Card sx={{ height: '100%' }}>
+            <Card sx={{ height: '100%', borderRadius: 0, border: `1px solid ${theme.palette.divider}`, boxShadow: 'none' }}>
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 2 }}>
                   <GavelIcon color="primary" sx={{ mr: 2, fontSize: 40 }} />
                   <Box>
-                    <Typography variant="h6" component="h3" gutterBottom>
+                    <Typography variant="h6" component="h3" gutterBottom fontWeight={400}>
                       Formato de Denuncia por Discriminación
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -376,7 +431,7 @@ const RightsPage = () => {
                   variant="outlined"
                   color="primary"
                   endIcon={<DownloadIcon />}
-                  sx={{ mt: 2 }}
+                  sx={{ mt: 2, borderRadius: 0 }}
                 >
                   Descargar formato
                 </Button>
@@ -385,12 +440,12 @@ const RightsPage = () => {
           </Grid>
           
           <Grid item xs={12} md={4}>
-            <Card sx={{ height: '100%' }}>
+            <Card sx={{ height: '100%', borderRadius: 0, border: `1px solid ${theme.palette.divider}`, boxShadow: 'none' }}>
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 2 }}>
                   <FamilyRestroomIcon color="primary" sx={{ mr: 2, fontSize: 40 }} />
                   <Box>
-                    <Typography variant="h6" component="h3" gutterBottom>
+                    <Typography variant="h6" component="h3" gutterBottom fontWeight={400}>
                       Directorio de Organizaciones de Apoyo
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -402,7 +457,7 @@ const RightsPage = () => {
                   variant="outlined"
                   color="primary"
                   endIcon={<DownloadIcon />}
-                  sx={{ mt: 2 }}
+                  sx={{ mt: 2, borderRadius: 0 }}
                 >
                   Descargar directorio
                 </Button>
@@ -414,19 +469,34 @@ const RightsPage = () => {
 
       {/* Sección de Preguntas Frecuentes */}
       <Box sx={{ mb: 6 }}>
-        <Typography variant="h4" component="h2" gutterBottom sx={{ fontWeight: 600 }}>
-          Preguntas Frecuentes
+        <Typography 
+          variant="h6" 
+          component="p"
+          sx={{ 
+            mb: 2,
+            color: 'text.secondary',
+            letterSpacing: '0.05em',
+            fontWeight: 400
+          }}
+        >
+          PREGUNTAS FRECUENTES
+        </Typography>
+        
+        <Divider sx={{ width: 40, mb: 4 }} />
+        
+        <Typography variant="h4" component="h2" gutterBottom fontWeight={300}>
+          Situaciones comunes y sus soluciones
         </Typography>
         
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
-            <Accordion elevation={1} sx={{ mb: 2 }}>
+            <StyledAccordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel-faq1-content"
                 id="panel-faq1-header"
               >
-                <Typography variant="subtitle1" component="h3" fontWeight={500}>
+                <Typography variant="subtitle1" component="h3" fontWeight={400}>
                   ¿Qué hago si soy detenido por autoridades migratorias?
                 </Typography>
               </AccordionSummary>
@@ -467,15 +537,15 @@ const RightsPage = () => {
                   </ListItem>
                 </List>
               </AccordionDetails>
-            </Accordion>
+            </StyledAccordion>
             
-            <Accordion elevation={1} sx={{ mb: 2 }}>
+            <StyledAccordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel-faq2-content"
                 id="panel-faq2-header"
               >
-                <Typography variant="subtitle1" component="h3" fontWeight={500}>
+                <Typography variant="subtitle1" component="h3" fontWeight={400}>
                   ¿Puedo acceder a tratamiento hormonal como persona trans migrante?
                 </Typography>
               </AccordionSummary>
@@ -487,17 +557,17 @@ const RightsPage = () => {
                   Organizaciones como Casa Arcoíris y Clínica Especializada en Salud LGBTQ+ pueden ayudarte a acceder a estos servicios. Consulta la sección de contactos para obtener información de estas organizaciones.
                 </Typography>
               </AccordionDetails>
-            </Accordion>
+            </StyledAccordion>
           </Grid>
           
           <Grid item xs={12} md={6}>
-            <Accordion elevation={1} sx={{ mb: 2 }}>
+            <StyledAccordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel-faq3-content"
                 id="panel-faq3-header"
               >
-                <Typography variant="subtitle1" component="h3" fontWeight={500}>
+                <Typography variant="subtitle1" component="h3" fontWeight={400}>
                   ¿Cómo solicito asilo en México?
                 </Typography>
               </AccordionSummary>
@@ -535,15 +605,15 @@ const RightsPage = () => {
                   El proceso puede durar hasta 45 días hábiles, y durante este tiempo deberás presentarte semanalmente ante la COMAR para firmar.
                 </Typography>
               </AccordionDetails>
-            </Accordion>
+            </StyledAccordion>
             
-            <Accordion elevation={1} sx={{ mb: 2 }}>
+            <StyledAccordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel-faq4-content"
                 id="panel-faq4-header"
               >
-                <Typography variant="subtitle1" component="h3" fontWeight={500}>
+                <Typography variant="subtitle1" component="h3" fontWeight={400}>
                   ¿Qué hago si sufro discriminación en un albergue o refugio?
                 </Typography>
               </AccordionSummary>
@@ -578,7 +648,7 @@ const RightsPage = () => {
                   </ListItem>
                 </List>
               </AccordionDetails>
-            </Accordion>
+            </StyledAccordion>
           </Grid>
         </Grid>
       </Box>
@@ -588,13 +658,14 @@ const RightsPage = () => {
         elevation={0}
         sx={{ 
           p: 4, 
-          bgcolor: theme.palette.primary.light + '15',
-          borderRadius: 2,
+          borderRadius: 0,
+          border: `1px solid ${theme.palette.divider}`,
+          borderTop: 'none',
         }}
       >
         <Grid container spacing={4} alignItems="center">
           <Grid item xs={12} md={8}>
-            <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 600 }}>
+            <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 300 }}>
               ¿Necesitas asesoría legal personalizada?
             </Typography>
             <Typography variant="body1" paragraph>
@@ -608,6 +679,7 @@ const RightsPage = () => {
               size="large"
               component="a"
               href="/contactos"
+              sx={{ borderRadius: 0 }}
             >
               Solicitar asesoría legal
             </Button>

@@ -6,8 +6,8 @@ import {
   Breadcrumbs, 
   Link, 
   useTheme,
-  Fade,
   Container,
+  Divider,
   alpha 
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
@@ -16,7 +16,7 @@ import { styled } from '@mui/material/styles';
 import { ElegantBar, GradientText } from '../../theme/CustomStyles';
 import { useLanguage } from '../../context/LanguageContext';
 
-// Contenedor del encabezado con fondo sutil
+// Contenedor del encabezado minimalista
 const HeaderContainer = styled(Box)(({ 
   theme, 
   backgroundcolor,
@@ -33,7 +33,7 @@ const HeaderContainer = styled(Box)(({
   width: '100%',
 }));
 
-// Texto de subtítulo refinado
+// Texto de subtítulo minimalista
 const StyledSubtitle = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.secondary,
   maxWidth: '800px',
@@ -41,7 +41,7 @@ const StyledSubtitle = styled(Typography)(({ theme }) => ({
   lineHeight: 1.6,
 }));
 
-// Estilo para las migas de pan
+// Estilo para las migas de pan minimalista
 const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
   marginBottom: theme.spacing(2),
   '& .MuiBreadcrumbs-separator': {
@@ -50,7 +50,7 @@ const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
   },
 }));
 
-// Link para migas de pan
+// Link para migas de pan minimalista
 const BreadcrumbLink = styled(Link)(({ theme }) => ({
   fontSize: '0.875rem',
   color: theme.palette.text.secondary,
@@ -107,114 +107,91 @@ const PageHeader = ({
       sx={sx}
     >
       <Container maxWidth={fullWidth ? false : 'lg'} disableGutters={fullWidth}>
-        <Fade in={true} timeout={800}>
-          <Box>
-            {/* Breadcrumbs */}
-            {breadcrumbs.length > 0 && (
-              <StyledBreadcrumbs 
-                separator={<NavigateNextIcon fontSize="small" />}
-                aria-label="breadcrumb"
-                sx={{ 
-                  ...((isCentered) && { justifyContent: 'center' }),
-                  alignItems: 'center',
-                  mx: isCentered ? 'auto' : 0, 
-                }}
+        <Box>
+          {/* Breadcrumbs */}
+          {breadcrumbs.length > 0 && (
+            <StyledBreadcrumbs 
+              separator={<NavigateNextIcon fontSize="small" />}
+              aria-label="breadcrumb"
+              sx={{ 
+                ...((isCentered) && { justifyContent: 'center' }),
+                alignItems: 'center',
+                mx: isCentered ? 'auto' : 0, 
+              }}
+            >
+              <BreadcrumbLink 
+                component={RouterLink} 
+                to="/" 
+                underline="none"
               >
-                <BreadcrumbLink 
-                  component={RouterLink} 
-                  to="/" 
-                  underline="none"
-                >
-                  {t('nav.home')}
-                </BreadcrumbLink>
-                
-                {breadcrumbs.map((crumb, index) => (
-                  <React.Fragment key={index}>
-                    {index === breadcrumbs.length - 1 ? (
-                      <CurrentBreadcrumb color="text.primary">
-                        {crumb.label}
-                      </CurrentBreadcrumb>
-                    ) : (
-                      <BreadcrumbLink 
-                        component={RouterLink} 
-                        to={crumb.path} 
-                        underline="none"
-                      >
-                        {crumb.label}
-                      </BreadcrumbLink>
-                    )}
-                  </React.Fragment>
-                ))}
-              </StyledBreadcrumbs>
-            )}
-            
-            {/* Título */}
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: subtitle ? 1 : 0 }}>
-              {icon && !isCentered && (
-                <Box sx={{ mr: 1.5, color: gradient ? 'inherit' : titleColor }}>
-                  {icon}
-                </Box>
-              )}
+                {t('nav.home')}
+              </BreadcrumbLink>
               
-              {gradient ? (
-                <GradientText 
-                  variant={barColor}
-                  component="h1"
-                  fontWeight={700}
-                  sx={{ mb: subtitle ? 1 : 0 }}
-                >
-                  {title}
-                </GradientText>
-              ) : (
-                <Typography 
-                  variant="h3" 
-                  component="h1" 
-                  color={titleColor}
-                  fontWeight={700}
-                  sx={{ mb: subtitle ? 1 : 0 }}
-                >
-                  {title}
-                </Typography>
-              )}
+              {breadcrumbs.map((crumb, index) => (
+                <React.Fragment key={index}>
+                  {index === breadcrumbs.length - 1 ? (
+                    <CurrentBreadcrumb color="text.primary">
+                      {crumb.label}
+                    </CurrentBreadcrumb>
+                  ) : (
+                    <BreadcrumbLink 
+                      component={RouterLink} 
+                      to={crumb.path} 
+                      underline="none"
+                    >
+                      {crumb.label}
+                    </BreadcrumbLink>
+                  )}
+                </React.Fragment>
+              ))}
+            </StyledBreadcrumbs>
+          )}
+          
+          {/* Título superior minimalista */}
+          <Typography 
+            variant="h6" 
+            component="p"
+            sx={{ 
+              mb: 2,
+              color: 'text.secondary',
+              letterSpacing: '0.05em',
+              fontWeight: 400,
+              textAlign: isCentered ? 'center' : 'left',
+            }}
+          >
+            {title?.toUpperCase()}
+          </Typography>
+          
+          <Divider sx={{ 
+            width: barWidth, 
+            mb: 4,
+            mx: isCentered ? 'auto' : 0
+          }} />
+            
+          {/* Subtítulo */}
+          {subtitle && (
+            <StyledSubtitle 
+              variant="h3" 
+              component="h1"
+              color={textColorSubtitle}
+              sx={{ 
+                maxWidth: isCentered ? '650px' : '800px',
+                mx: isCentered ? 'auto' : 0,
+                fontWeight: 300,
+                textAlign: isCentered ? 'center' : 'left',
+              }}
+            >
+              {subtitle}
+            </StyledSubtitle>
+          )}
+          
+          {/* Contenido adicional */}
+          {children && (
+            <Box sx={{ mt: 3 }}>
+              {children}
             </Box>
-            
-            {/* Subtítulo */}
-            {subtitle && (
-              <StyledSubtitle 
-                variant="subtitle1" 
-                color={textColorSubtitle}
-                sx={{ 
-                  maxWidth: isCentered ? '650px' : '800px',
-                  mx: isCentered ? 'auto' : 0, 
-                }}
-              >
-                {subtitle}
-              </StyledSubtitle>
-            )}
-            
-            {/* Barra decorativa */}
-            {!compact && (
-              <ElegantBar 
-                width={barWidth} 
-                height={3} 
-                variant={barColor}
-                sx={{ 
-                  mt: 2, 
-                  mb: 1,
-                  mx: isCentered ? 'auto' : 0,
-                  borderRadius: '2px',
-                }} 
-              />
-            )}
-            
-            {/* Contenido adicional */}
-            {children && (
-              <Box sx={{ mt: 3 }}>
-                {children}
-              </Box>
-            )}
-          </Box>
-        </Fade>
+          )}
+        </Box>
       </Container>
     </HeaderContainer>
   );

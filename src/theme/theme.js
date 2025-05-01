@@ -1,19 +1,19 @@
 // src/theme/theme.js
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 
-// Paleta refinada y minimalista con toques sutiles LGBTQ+
+// Paleta refinada y minimalista inspirada en diseño de arquitectura con sutiles toques LGBTQ+
 const palette = {
   // Colores primarios y secundarios más sutiles
   primary: {
-    main: '#7E57C2',    // Púrpura suave
-    light: '#B085F5',
-    dark: '#4D2C91',
+    main: '#222222',    // Negro casi puro para el diseño minimalista
+    light: '#424242',
+    dark: '#000000',
     contrastText: '#FFFFFF',
   },
   secondary: {
-    main: '#26A69A',    // Verde-azulado
-    light: '#64D8CB',
-    dark: '#00766C',
+    main: '#7E57C2',    // Púrpura suave como acento LGBTQ+
+    light: '#B085F5',
+    dark: '#4D2C91',
     contrastText: '#FFFFFF',
   },
   // Colores para acentos LGBTQ+ (suaves y elegantes)
@@ -23,7 +23,7 @@ const palette = {
   accent4: '#66BB6A',  // Verde
   accent5: '#42A5F5',  // Azul
   
-  // Escala de grises refinada
+  // Escala de grises refinada para diseño arquitectónico
   grey: {
     50: '#FAFAFA',
     100: '#F5F5F5',
@@ -37,14 +37,14 @@ const palette = {
     900: '#212121',
   },
   
-  // Colores de texto más refinados
+  // Colores de texto minimalistas
   text: {
     primary: '#212121',    // Casi negro
     secondary: '#757575',  // Gris medio
     disabled: '#9E9E9E',   // Gris claro
   },
   
-  // Colores de fondo sutiles
+  // Fondos limpios y minimalistas
   background: {
     default: '#FFFFFF',
     paper: '#FFFFFF',
@@ -77,7 +77,7 @@ const palette = {
   divider: 'rgba(0, 0, 0, 0.08)',
 };
 
-// Tipografía elegante y moderna
+// Tipografía elegante y moderna para diseño arquitectónico
 const typography = {
   fontFamily: [
     'Inter', 
@@ -92,50 +92,55 @@ const typography = {
   
   // Tamaños y pesos refinados
   h1: {
-    fontWeight: 700,
-    fontSize: '2.75rem',
+    fontWeight: 300, // Más ligero para aspecto arquitectónico
+    fontSize: '3rem',
     letterSpacing: '-0.02em',
     lineHeight: 1.2,
   },
   h2: {
-    fontWeight: 700,
-    fontSize: '2.25rem',
+    fontWeight: 300,
+    fontSize: '2.5rem',
     letterSpacing: '-0.01em',
     lineHeight: 1.2,
   },
   h3: {
-    fontWeight: 600,
-    fontSize: '1.75rem',
+    fontWeight: 400,
+    fontSize: '2rem',
     lineHeight: 1.3,
+    letterSpacing: '-0.01em',
   },
   h4: {
-    fontWeight: 600,
-    fontSize: '1.5rem',
+    fontWeight: 400,
+    fontSize: '1.75rem',
     lineHeight: 1.3,
+    letterSpacing: '-0.01em',
   },
   h5: {
-    fontWeight: 600,
+    fontWeight: 500,
     fontSize: '1.25rem',
     lineHeight: 1.4,
   },
   h6: {
-    fontWeight: 600,
+    fontWeight: 500,
     fontSize: '1.125rem',
     lineHeight: 1.4,
   },
   subtitle1: {
-    fontWeight: 500,
+    fontWeight: 400,
     fontSize: '1rem',
     lineHeight: 1.5,
+    letterSpacing: '0.01em',
   },
   subtitle2: {
-    fontWeight: 500,
+    fontWeight: 400,
     fontSize: '0.875rem',
     lineHeight: 1.5,
+    letterSpacing: '0.01em',
   },
   body1: {
     fontSize: '1rem',
     lineHeight: 1.6,
+    letterSpacing: '0.01em',
   },
   body2: {
     fontSize: '0.875rem',
@@ -143,7 +148,7 @@ const typography = {
   },
   button: {
     textTransform: 'none',
-    fontWeight: 500,
+    fontWeight: 400,
     fontSize: '0.875rem',
     letterSpacing: '0.02em',
   },
@@ -183,19 +188,18 @@ const components = {
   MuiButton: {
     styleOverrides: {
       root: {
-        borderRadius: 4,
-        padding: '10px 16px',
-        fontWeight: 500,
+        borderRadius: 0, // Esquinas cuadradas para diseño arquitectónico
+        padding: '10px 24px',
+        fontWeight: 400,
         boxShadow: 'none',
         transition: 'all 0.2s ease-in-out',
-        '&:hover': {
-          transform: 'translateY(-1px)',
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
-        },
+        textTransform: 'none',
+        letterSpacing: '0.02em',
       },
       contained: {
         '&:hover': {
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+          boxShadow: 'none',
+          backgroundColor: palette.grey[900],
         },
       },
       outlined: {
@@ -226,8 +230,9 @@ const components = {
   MuiCard: {
     styleOverrides: {
       root: {
-        borderRadius: 8,
-        boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.06)',
+        borderRadius: 0, // Esquinas cuadradas para diseño arquitectónico
+        boxShadow: 'none',
+        border: `1px solid ${palette.divider}`,
         transition: 'all 0.3s ease',
         '&:hover': {
           boxShadow: '0px 4px 16px rgba(0, 0, 0, 0.08)',
@@ -255,7 +260,7 @@ const components = {
       },
       title: {
         fontSize: '1.125rem',
-        fontWeight: 600,
+        fontWeight: 500,
       },
       subheader: {
         fontSize: '0.875rem',
@@ -267,10 +272,10 @@ const components = {
   MuiChip: {
     styleOverrides: {
       root: {
-        borderRadius: 16,
+        borderRadius: 0, // Esquinas cuadradas
         height: 30,
         fontSize: '0.75rem',
-        fontWeight: 500,
+        fontWeight: 400,
       },
       filled: {
         backgroundColor: palette.grey[100],
@@ -297,9 +302,11 @@ const components = {
     styleOverrides: {
       root: {
         backgroundImage: 'none',
+        borderRadius: 0, // Esquinas cuadradas para diseño arquitectónico
       },
       elevation1: {
-        boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.05)',
+        boxShadow: 'none',
+        border: `1px solid ${palette.divider}`,
       },
       elevation2: {
         boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.06)',
@@ -350,7 +357,7 @@ const components = {
     styleOverrides: {
       root: {
         '& .MuiOutlinedInput-root': {
-          borderRadius: 4,
+          borderRadius: 0, // Esquinas cuadradas
           '& fieldset': {
             borderColor: palette.grey[300],
             transition: 'all 0.2s ease',
@@ -360,6 +367,7 @@ const components = {
           },
           '&.Mui-focused fieldset': {
             borderWidth: '1px',
+            borderColor: palette.primary.main,
           },
         },
       },
@@ -370,9 +378,11 @@ const components = {
     styleOverrides: {
       root: {
         textDecoration: 'none',
-        fontWeight: 500,
+        fontWeight: 400,
+        color: palette.primary.main,
         '&:hover': {
-          textDecoration: 'underline',
+          color: palette.secondary.main,
+          textDecoration: 'none',
         },
       },
     },
@@ -384,9 +394,9 @@ const components = {
         minHeight: 48,
       },
       indicator: {
-        height: 3,
-        borderTopLeftRadius: 3,
-        borderTopRightRadius: 3,
+        height: 2,
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
       },
     },
   },
@@ -395,7 +405,7 @@ const components = {
     styleOverrides: {
       root: {
         textTransform: 'none',
-        fontWeight: 500,
+        fontWeight: 400,
         minHeight: 48,
         padding: '0 16px',
       },
@@ -409,7 +419,7 @@ const components = {
         borderBottom: `1px solid ${palette.divider}`,
       },
       head: {
-        fontWeight: 600,
+        fontWeight: 500,
         backgroundColor: palette.background.light,
       },
     },
@@ -422,9 +432,9 @@ let theme = createTheme({
   typography,
   components,
   shape: {
-    borderRadius: 4,
+    borderRadius: 0, // Esquinas cuadradas para diseño arquitectónico
   },
-  // Sombras más sutiles y elegantes
+  // Sombras más sutiles
   shadows: [
     'none',
     '0px 1px 3px rgba(0, 0, 0, 0.04)',
@@ -445,19 +455,19 @@ export const elegantGradients = {
   secondary: `linear-gradient(135deg, ${palette.secondary.light} 0%, ${palette.secondary.main} 100%)`,
   subtle: `linear-gradient(135deg, ${palette.grey[100]} 0%, ${palette.grey[200]} 100%)`,
   rainbow: `linear-gradient(90deg, 
-    ${palette.accent1}40 0%, 
-    ${palette.accent2}40 20%, 
-    ${palette.accent3}40 40%, 
-    ${palette.accent4}40 60%, 
-    ${palette.accent5}40 80%, 
-    ${palette.primary.light}40 100%)`,
+    ${palette.accent1} 0%, 
+    ${palette.accent2} 20%, 
+    ${palette.accent3} 40%, 
+    ${palette.accent4} 60%, 
+    ${palette.accent5} 80%, 
+    ${palette.secondary.main} 100%)`,
   rainbowSubtle: `linear-gradient(90deg, 
     ${palette.accent1}20 0%, 
     ${palette.accent2}20 20%, 
     ${palette.accent3}20 40%, 
     ${palette.accent4}20 60%, 
     ${palette.accent5}20 80%, 
-    ${palette.primary.light}20 100%)`,
+    ${palette.secondary.main}20 100%)`,
 };
 
 export default theme;

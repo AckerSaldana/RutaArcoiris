@@ -17,10 +17,11 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { styled } from '@mui/material/styles';
 
-// Styled tag chip
+// Styled tag chip con estilo minimalista
 const TagChip = styled(Chip)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   border: `1px solid ${theme.palette.divider}`,
+  borderRadius: 0,
   '&:hover': {
     backgroundColor: theme.palette.action.hover,
   },
@@ -64,15 +65,20 @@ const ResourceCard = ({
   
   return (
     <Card 
-      elevation={1} 
+      elevation={0} 
       sx={{
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
         cursor: onClick ? 'pointer' : 'default',
         transition: 'all 0.2s ease',
+        borderLeft: `2px solid ${typeColor}`,
+        borderTop: 'none',
+        borderRight: `1px solid ${theme.palette.divider}`,
+        borderBottom: `1px solid ${theme.palette.divider}`,
+        borderRadius: 0,
         '&:hover': {
-          boxShadow: 4,
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
           transform: 'translateY(-4px)',
         },
         ...sx
@@ -95,7 +101,7 @@ const ResourceCard = ({
                 {icon}
               </Box>
             )}
-            <Typography variant="h6" component="h3" fontWeight={600}>
+            <Typography variant="h6" component="h3" fontWeight={400} letterSpacing="0.02em">
               {title}
             </Typography>
           </Box>
@@ -105,9 +111,10 @@ const ResourceCard = ({
               label={resourceType} 
               size="small"
               sx={{
-                backgroundColor: `${typeColor}20`,
+                backgroundColor: `${typeColor}10`,
                 color: typeColor,
-                fontWeight: 500,
+                fontWeight: 400,
+                borderRadius: 0,
               }}
             />
           )}
@@ -136,7 +143,7 @@ const ResourceCard = ({
             <Chip 
               label={language} 
               size="small" 
-              sx={{ height: 20, fontSize: '0.7rem' }}
+              sx={{ height: 20, fontSize: '0.7rem', borderRadius: 0 }}
             />
           </Box>
         )}
@@ -151,6 +158,14 @@ const ResourceCard = ({
               href={downloadUrl}
               download
               color="primary"
+              sx={{ 
+                fontWeight: 400,
+                textTransform: 'none',
+                '&:hover': {
+                  backgroundColor: 'transparent',
+                  color: typeColor,
+                }
+              }}
             >
               Descargar
             </Button>
@@ -163,6 +178,14 @@ const ResourceCard = ({
               target="_blank"
               rel="noopener noreferrer"
               color="primary"
+              sx={{ 
+                fontWeight: 400,
+                textTransform: 'none',
+                '&:hover': {
+                  backgroundColor: 'transparent',
+                  color: typeColor,
+                }
+              }}
             >
               Ver recurso
             </Button>
@@ -170,10 +193,10 @@ const ResourceCard = ({
         </Box>
         
         <Box>
-          <IconButton size="small" onClick={onShare} aria-label="Compartir recurso">
+          <IconButton size="small" onClick={onShare} aria-label="Compartir recurso" sx={{ borderRadius: 0 }}>
             <ShareIcon fontSize="small" />
           </IconButton>
-          <IconButton size="small" onClick={onSave} aria-label={isSaved ? "Guardado" : "Guardar recurso"}>
+          <IconButton size="small" onClick={onSave} aria-label={isSaved ? "Guardado" : "Guardar recurso"} sx={{ borderRadius: 0 }}>
             {isSaved ? <BookmarkIcon fontSize="small" color="primary" /> : <BookmarkBorderIcon fontSize="small" />}
           </IconButton>
         </Box>
